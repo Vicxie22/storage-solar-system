@@ -35,6 +35,10 @@ class TransaksiSolarController extends Controller
             'tanggal_transaksi' => 'required|date',
         ]);
 
+        $request->merge([
+            'user_id' => auth()->id()
+        ]);
+
         $data = $request->all();
 
         // LOGIKA OTOMATISASI STOK DAN STATUS

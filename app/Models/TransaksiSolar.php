@@ -9,6 +9,7 @@ class TransaksiSolar extends Model
     protected $table = 'transaksi_solars';
     
     protected $fillable = [
+        'user_id',
         'id_penyimpanan',
         'jenis_transaksi',
         'id_penggunaan',

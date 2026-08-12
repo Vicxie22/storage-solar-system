@@ -3,12 +3,16 @@
 @section('content')
 <div class="row mb-4 align-items-center">
     <div class="col-md-8">
-        <h1 class="fs-3 mb-1 app-title">Pencatatan Solar</h1>
-        <p class="text-secondary mb-0">Kelola pengajuan dan pencatatan pengambilan solar.</p>
+        <h1 class="fs-3 mb-1 app-title">
+            {{ auth()->user()->role === 'Admin' ? 'Pencatatan Solar' : 'Pengajuan Solar' }}
+        </h1>
+        <p class="text-secondary mb-0">
+            {{ auth()->user()->role === 'Admin' ? 'Kelola pengajuan dan pencatatan pengambilan solar.' : 'Buat dan pantau status pengajuan pengambilan solar Anda.' }}
+        </p>
     </div>
     <div class="col-md-4 text-md-end mt-3 mt-md-0">
         <a href="{{ route('solar.create') }}" class="btn btn-primary" style="background-color: #d6643c; border-color: #d6643c;">
-            <i class="ti ti-plus me-1"></i> Tambah Catatan
+            <i class="ti ti-plus me-1"></i> {{ auth()->user()->role === 'Admin' ? 'Tambah Catatan' : 'Tambah Pengajuan' }}
         </a>
     </div>
 </div>
@@ -96,7 +100,6 @@
         </div>
     </div>
 
-{{-- JIKA BUKAN ADMIN (USER), TAMPILKAN KOTAK SAMBUTAN SAJA --}}
 @else
     <div class="card shadow-sm border-0 bg-light mt-4">
         <div class="card-body text-center py-5">

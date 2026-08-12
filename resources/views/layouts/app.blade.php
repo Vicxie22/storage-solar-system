@@ -138,7 +138,9 @@
         <li>
             <a class="nav-link {{ request()->routeIs('solar.index') ? 'active' : '' }}" href="{{ route('solar.index') }}">
                 <i class="ti ti-gas-station"></i>
-                <span class="nav-text">Pencatatan Solar</span>
+                <span class="nav-text">
+                    {{ auth()->user()->role === 'Admin' ? 'Pencatatan Solar' : 'Pengajuan Solar' }}
+                </span>
             </a>
         </li>
 
@@ -183,7 +185,7 @@
 </aside>
 
 <!-- Main Content -->
-<main id="content" class="content py-10" style="margin-top: 60px;">
+<main id="content" class="content pt-3 pb-5" style="margin-top: 60px;">
     <div class="container-fluid">
         @yield('content')
     </div>

@@ -3,8 +3,12 @@
 @section('content')
 <div class="row mb-4 align-items-center">
     <div class="col-md-8">
-        <h1 class="fs-3 mb-1 app-title">Riwayat</h1>
-        <p class="text-secondary mb-0">Catatan riwayat seluruh transaksi masuk, keluar, dan penyesuaian stok.</p>
+        <h1 class="fs-3 mb-1 app-title">
+            {{ auth()->user()->role === 'Admin' ? 'Riwayat Transaksi' : 'Riwayat Pengajuan Saya' }}
+        </h1>
+        <p class="text-secondary mb-0">
+            {{ auth()->user()->role === 'Admin' ? 'Catatan riwayat seluruh transaksi masuk, keluar, dan penyesuaian stok.' : 'Catatan riwayat pengajuan pengambilan solar yang pernah Anda lakukan.' }}
+        </p>
     </div>
 </div>
 
@@ -18,6 +22,7 @@
                     <th>Jenis</th>
                     <th>Jumlah (L)</th>
                     <th>Penggunaan</th>
+                    <th>Status</th>
                     <th class="text-center">Aksi</th>
                 </tr>
             </thead>
@@ -37,6 +42,19 @@
                     </td>
                     <td class="fw-bold">{{ $item->jumlah_liter }}</td>
                     <td>{{ $item->penggunaan->nama_item ?? '-' }}</td>
+
+                    <td>
+                        @if($item->status == 'Pending')
+                            <span class="badge bg-warning text-dark">Menunggu Admin</span>
+                        @elseif($item->status == 'Approved')
+                            <span class="badge bg-success">Disetujui</span>
+                        @elseif($item->status == 'Rejected')
+                            <span class="badge bg-danger">Ditolak</span>
+                        @else
+                            <span class="badge bg-secondary">{{ $item->status }}</span>
+                        @endif
+                    </td>
+
                     <td class="text-center">
                         <button type="button" class="btn btn-sm btn-light border" data-bs-toggle="modal" data-bs-target="#modalDetail-{{ $item->id }}">
                             <i class="ti ti-eye text-secondary"></i> Detail
