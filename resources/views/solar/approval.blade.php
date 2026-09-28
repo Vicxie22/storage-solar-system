@@ -33,6 +33,7 @@
                         <th>Untuk Penggunaan</th>
                         <th>Jumlah (L)</th>
                         <th>Keterangan</th>
+                        <th>Lampiran Invoice</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -45,6 +46,19 @@
                         <td>{{ $item->penggunaan->nama_item ?? '-' }}</td>
                         <td>{{ $item->jumlah_liter }}</td>
                         <td>{{ $item->keterangan }}</td>
+                        
+                        <!-- IMPLEMENTASI KOLOM LAMPIRAN INVOICE -->
+                        <td>
+                            @if($item->file_invoice)
+                                <a href="{{ asset('storage/' . $item->file_invoice) }}" target="_blank" class="btn btn-sm btn-info text-white">
+                                    <i class="fas fa-file-alt"></i> Lihat
+                                </a>
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
+                        </td>
+                        
+                        <!-- KOLOM AKSI PERSETUJUAN -->
                         <td>
                             <form action="{{ route('solar.approval.update', $item->id) }}" method="POST" class="d-inline">
                                 @csrf
@@ -67,7 +81,8 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="text-center">Tidak ada transaksi yang menunggu persetujuan.</td>
+                        <!-- PENYESUAIAN COLSPAN MENJADI 8 -->
+                        <td colspan="8" class="text-center">Tidak ada transaksi yang menunggu persetujuan.</td>
                     </tr>
                     @endforelse
                 </tbody>

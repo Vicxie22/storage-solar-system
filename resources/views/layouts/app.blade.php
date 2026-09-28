@@ -150,12 +150,6 @@
                 <span class="nav-text">Informasi Stok</span>
             </a>
         </li>
-        <li>
-            <a class="nav-link {{ request()->routeIs('solar.history') ? 'active' : '' }}" href="{{ route('solar.history') }}">
-                <i class="ti ti-history"></i>
-                <span class="nav-text">Riwayat</span>
-            </a>
-        </li>
 
         @if(auth()->user()->role == 'Admin')
 
@@ -177,6 +171,15 @@
                 <li><a class="nav-link {{ request()->routeIs('penyimpanan.*') ? 'active' : '' }}" href="{{ route('penyimpanan.index') }}"><span class="nav-text">Lokasi Penyimpanan</span></a></li>
                 <li><a class="nav-link {{ request()->routeIs('penggunaan.*') ? 'active' : '' }}" href="{{ route('penggunaan.index') }}"><span class="nav-text">Item Penggunaan</span></a></li>
             </ul>
+        </li>
+
+        <!-- Hapus menu Riwayat yang lama, lalu tambahkan kode ini di paling bawah sidebar -->
+        <li class="px-4 pt-4 pb-2"><small class="nav-text text-muted fw-bold">SISTEM</small></li>
+        <li>
+            <a class="nav-link {{ request()->routeIs('log.aktivitas') ? 'active' : '' }}" href="{{ route('log.aktivitas') }}">
+                <i class="ti ti-menu-2"></i> <!-- Logo Garis 3 -->
+                <span class="nav-text">Log Aktivitas</span>
+            </a>
         </li>
 
         @endif

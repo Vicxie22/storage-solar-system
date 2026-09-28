@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TransaksiSolar;
+use App\Models\LogAktivitas; // <-- WAJIB DITAMBAHKAN
 
 class ApprovalSolarController extends Controller
 {
@@ -44,6 +45,17 @@ class ApprovalSolarController extends Controller
 
         $transaksi->status = $request->status;
         $transaksi->save();
+
+        // ---------------------------------------------------------
+        // CATAT KE LOG AKTIVITAS (MENYETUJUI / MENOLAK PENGAJUAN)
+        // ---------------------------------------------------------
+        $namaAksi = $request->status == 'Approved' ? 'Menyetujui Pengajuan' : 'Menolak Pengajuan';
+        
+        LogAktivitas::create([
+            'user_id' => auth()->id(),
+            'aksi' => 'Approval Transaksi',
+            'deskripsi' => $namaAksi . ' solar untuk ID: ' . $id . ' sebanyak ' . $transaksi->jumlah_liter . ' Liter.'
+        ]);
 
         $pesan = $request->status == 'Approved' ? 'disetujui' : 'ditolak';
         

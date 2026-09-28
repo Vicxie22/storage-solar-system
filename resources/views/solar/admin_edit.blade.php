@@ -32,7 +32,8 @@
 
             <div class="mb-3">
                 <label class="form-label fw-semibold">Jenis Transaksi</label>
-                <select name="jenis_transaksi" class="form-select" required>
+                {{-- Tambahkan ID jenis_transaksi --}}
+                <select name="jenis_transaksi" id="jenis_transaksi" class="form-select" required>
                     <option value="Masuk" {{ $transaksi->jenis_transaksi == 'Masuk' ? 'selected' : '' }}>Masuk (Pengisian ke Tangki)</option>
                     <option value="Keluar" {{ $transaksi->jenis_transaksi == 'Keluar' ? 'selected' : '' }}>Keluar (Penggunaan Lapangan)</option>
                     <option value="Penyesuaian Stok" {{ $transaksi->jenis_transaksi == 'Penyesuaian Stok' ? 'selected' : '' }}>Penyesuaian Stok (Edit Manual)</option>
@@ -40,8 +41,9 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label fw-semibold">Item Penggunaan (Kosongkan jika Masuk)</label>
-                <select name="id_penggunaan" class="form-select">
+                <label class="form-label fw-semibold">Item Penggunaan (Kosongkan jika Masuk/Penyesuaian)</label>
+                {{-- Tambahkan ID id_penggunaan --}}
+                <select name="id_penggunaan" id="id_penggunaan" class="form-select">
                     <option value="">-- Pilih Penggunaan --</option>
                     @foreach($penggunaan as $guna)
                         <option value="{{ $guna->id }}" {{ $transaksi->id_penggunaan == $guna->id ? 'selected' : '' }}>
@@ -62,10 +64,35 @@
             </div>
 
             <div class="d-flex gap-2">
-                <a href="{{ route('solar.index') }}" class="btn btn-light border">Batal</a>
                 <button type="submit" class="btn btn-primary" style="background-color: #d6643c; border-color: #d6643c;">Simpan Perubahan</button>
+                <a href="{{ route('solar.index') }}" class="btn btn-light border">Batal</a>
             </div>
         </form>
     </div>
 </div>
+
+<!-- SCRIPT OTOMATISASI PENONAKTIFAN DROPDOWN PENGGUNAAN -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const jenisTransaksi = document.getElementById('jenis_transaksi');
+        const penggunaan = document.getElementById('id_penggunaan');
+
+        function togglePenggunaan() {
+            if (jenisTransaksi && (jenisTransaksi.value === 'Masuk' || jenisTransaksi.value === 'Penyesuaian Stok')) {
+                penggunaan.disabled = true;
+                penggunaan.value = '';
+            } else {
+                penggunaan.disabled = false;
+            }
+        }
+
+        // Jalankan saat pertama kali dimuat
+        togglePenggunaan();
+
+        // Jalankan saat jenis transaksi diubah
+        if (jenisTransaksi) {
+            jenisTransaksi.addEventListener('change', togglePenggunaan);
+        }
+    });
+</script>
 @endsection

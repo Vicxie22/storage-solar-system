@@ -28,10 +28,16 @@
                         </select>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label class="form-label fw-semibold" id="labelItem">Nama Item / Plat Nomor</label>
                         <input type="text" name="nama_item" id="inputItem" class="form-control" placeholder="Contoh: BK 1234 XX" required>
                         <small class="text-muted d-block mt-1" id="helpText">Masukkan plat nomor kendaraan operasional.</small>
+                    </div>
+
+                    <!-- PENAMBAHAN ELEMEN INPUT KAPASITAS -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Maksimal Kapasitas (Liter)</label>
+                        <input type="number" step="0.1" name="kapasitas_maksimal" class="form-control" required placeholder="Contoh: 100">
                     </div>
 
                     <button type="submit" class="btn btn-primary" style="background-color: #d6643c; border-color: #d6643c;">Simpan</button>
@@ -52,6 +58,7 @@
                                 <th>No</th>
                                 <th>Kategori</th>
                                 <th>Nama Item / Detail</th>
+                                <th>Kapasitas (L)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,10 +75,12 @@
                                     @endif
                                 </td>
                                 <td>{{ $item->nama_item }}</td>
+                                <!-- PENAMBAHAN REPRESENTASI DATA KAPASITAS -->
+                                <td>{{ number_format($item->kapasitas_maksimal ?? 0, 1) }}</td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="3" class="text-center py-4 text-muted">Data masih kosong.</td>
+                                <td colspan="4" class="text-center py-4 text-muted">Data masih kosong.</td>
                             </tr>
                             @endforelse
                         </tbody>

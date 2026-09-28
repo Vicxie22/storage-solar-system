@@ -11,7 +11,11 @@ class AuthController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
-            return redirect()->route('solar.index');
+            // Evaluasi hak akses jika sesi masih aktif
+            if (Auth::user()->role === 'Admin') {
+                return redirect()->route('solar.index');
+            }
+            return redirect()->route('solar.stok');
         }
         return view('auth.login');
     }
@@ -30,7 +34,13 @@ class AuthController extends Controller
         // Coba login
         if (Auth::attempt([$fieldType => $request->username, 'password' => $request->password])) {
             $request->session()->regenerate();
-            return redirect()->route('solar.index')->with('success', 'Berhasil login!');
+
+            // Pengalihan berbasis peran (Role-based redirect)
+            if (auth()->user()->role === 'Admin') {
+                return redirect()->route('solar.index')->with('success', 'Berhasil login sebagai Administrator.');
+            }
+            
+            return redirect()->route('solar.stok')->with('success', 'Berhasil login. Berikut adalah informasi stok saat ini.');
         }
 
         return back()->withErrors([

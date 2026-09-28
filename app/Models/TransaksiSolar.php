@@ -16,6 +16,7 @@ class TransaksiSolar extends Model
         'jumlah_liter',
         'tanggal_transaksi',
         'keterangan',
+        'informasi_edit',
         'status'
     ];
 

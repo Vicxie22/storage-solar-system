@@ -6,23 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
-{
+    {
     Schema::table('master_penyimpanans', function (Blueprint $table) {
         $table->double('stok_sekarang')->default(0)->after('lokasi');
     });
-}
+    }
 
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down(): void
     {
-        Schema::table('master_penyimpanans', function (Blueprint $table) {
-            //
-        });
+    Schema::table('master_penyimpanans', function (Blueprint $table) {
+        $table->dropColumn('stok_sekarang');
+    });
     }
 };
