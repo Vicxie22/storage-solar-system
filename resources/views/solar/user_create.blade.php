@@ -18,6 +18,23 @@
             @csrf
             <div class="card-body pt-2">
                 
+                {{-- TAMPILKAN PESAN ERROR JIKA MELEBIHI KAPASITAS --}}
+                @if(session('error'))
+                    <div class="alert alert-danger border-0 shadow-sm mb-4">
+                        <i class="ti ti-alert-circle me-1"></i> {{ session('error') }}
+                    </div>
+                @endif
+
+                @if($errors->any())
+                    <div class="alert alert-danger border-0 shadow-sm mb-4">
+                        <ul class="mb-0">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="mb-3">
                     <label for="tanggal_transaksi" class="form-label fw-semibold">Tanggal Transaksi</label>
                     <input type="date" name="tanggal_transaksi" class="form-control" required value="{{ date('Y-m-d') }}">
@@ -35,14 +52,12 @@
 
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Jenis Transaksi</label>
-                    <!-- Jika User biasa, kunci otomatis ke Keluar -->
                     <input type="text" class="form-control bg-light" value="Keluar (Pemakaian)" readonly>
                     <input type="hidden" name="jenis_transaksi" value="Keluar">
                 </div>
 
                 <div class="mb-3" id="group_penggunaan">
                     <label for="id_penggunaan" class="form-label fw-semibold">Untuk Penggunaan / Kendaraan <span class="text-danger">*</span></label>
-                    <!-- Wajib diisi (required) untuk User biasa -->
                     <select name="id_penggunaan" class="form-control form-select" required>
                         <option value="">-- Pilih Penggunaan --</option>
                         @foreach($penggunaan as $pg)
@@ -62,10 +77,10 @@
                 </div>
             </div>
 
-            <div class="mb-4">
-            <label for="file_invoice" class="form-label fw-semibold">Unggah Bukti / Invoice (Opsional)</label>
-            <input type="file" name="file_invoice" id="file_invoice" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
-            <small class="text-muted d-block mt-1">Format dokumen yang diizinkan: PDF, JPG, JPEG, PNG.</small>
+            <div class="mb-4 px-3">
+                <label for="file_invoice" class="form-label fw-semibold">Unggah Bukti / Invoice (Opsional)</label>
+                <input type="file" name="file_invoice" id="file_invoice" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+                <small class="text-muted d-block mt-1">Format dokumen yang diizinkan: PDF, JPG, JPEG, PNG.</small>
             </div>
 
             <div class="card-footer bg-white border-top-0 pb-4 d-flex gap-2">

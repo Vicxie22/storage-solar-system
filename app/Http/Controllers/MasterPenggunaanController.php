@@ -17,7 +17,8 @@ class MasterPenggunaanController extends Controller
     {
         $request->validate([
             'kategori' => 'required',
-            'nama_item' => 'required'
+            'nama_item' => 'required',
+            'kapasitas_maksimal' => 'required|numeric'
         ]);
 
         MasterPenggunaan::create($request->all());

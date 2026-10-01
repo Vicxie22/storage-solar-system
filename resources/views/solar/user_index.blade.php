@@ -52,6 +52,7 @@
                         <th>Penggunaan</th>
                         <th>Jumlah (L)</th>
                         <th>Keterangan</th>
+                        <th>Lampiran Invoice</th>
                         <th>Status</th>
                         <th class="text-center">Aksi</th>
                     </tr>
@@ -74,6 +75,17 @@
                         <td>{{ $item->penggunaan->nama_item ?? '-' }}</td>
                         <td>{{ $item->jumlah_liter }}</td>
                         <td>{{ $item->keterangan ?? '-' }}</td>
+
+                        <td>
+                            @if($item->file_invoice)
+                                <a href="{{ asset('storage/' . $item->file_invoice) }}" target="_blank" class="btn btn-sm btn-info text-white" style="background-color: #0dcaf0; border-color: #0dcaf0;">
+                                    <i class="ti ti-file-description me-1"></i> Lihat
+                                </a>
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
+                        </td>
+
                         <td>
                             @if($item->status == 'Pending')
                                 <span class="badge bg-warning text-dark">Pending</span>

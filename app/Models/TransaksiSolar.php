@@ -17,7 +17,8 @@ class TransaksiSolar extends Model
         'tanggal_transaksi',
         'keterangan',
         'informasi_edit',
-        'status'
+        'status',
+        'file_invoice'
     ];
 
     // Relasi balik ke tabel master penyimpanan

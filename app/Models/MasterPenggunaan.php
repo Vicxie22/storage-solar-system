@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MasterPenggunaan extends Model
 {
     protected $table = 'master_penggunaans';
-    protected $fillable = ['kategori', 'nama_item'];
+    protected $fillable = ['kategori', 'nama_item', 'kapasitas_maksimal'];
 
     public function transaksi()
     {
